@@ -1,9 +1,12 @@
 package com.example.learningspring.controllers;
 
+import com.example.learningspring.dtos.ExceptionDto;
 import com.example.learningspring.dtos.FakeStoreProductDto;
 import com.example.learningspring.models.Product;
 import com.example.learningspring.services.FakeStoreProductService;
 import com.example.learningspring.services.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

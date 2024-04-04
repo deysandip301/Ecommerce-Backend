@@ -1,6 +1,7 @@
 package com.example.learningspring.services;
 
 import com.example.learningspring.dtos.FakeStoreProductDto;
+import com.example.learningspring.exceptions.ProductNotFoundException;
 import com.example.learningspring.models.Category;
 import com.example.learningspring.models.Product;
 import org.springframework.stereotype.Service;
@@ -15,15 +16,13 @@ public class FakeStoreProductService implements ProductService{
 
     @Override
     public Product getProductById(Long id) {
-        // call the FakeStore API to get the product with given id
-        FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/"+id,
-                FakeStoreProductDto.class);
-        if (fakeStoreProductDto == null) {
-            return null;
-        }
+            FakeStoreProductDto fakeStoreProductDto = restTemplate.getForObject("https://fakestoreapi.com/products/" + id,
+                    FakeStoreProductDto.class);
 
-        // convert the FakeStoreProductDto object to Product object
-        return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
+            if (fakeStoreProductDto == null) {
+                throw new ProductNotFoundException(id,"Please pass a valid productId");
+            }
+            return convertFakeStoreProductDtoToProduct(fakeStoreProductDto);
     }
 
     @Override
