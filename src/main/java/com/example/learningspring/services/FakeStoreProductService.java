@@ -34,6 +34,11 @@ public class FakeStoreProductService implements ProductService{
         return convertFakeStoreProductDtosToProducts(fakeStoreProductDtos);
     }
 
+    @Override
+    public Product createProduct(Product product) {
+        return null;
+    }
+
     private List<Product> convertFakeStoreProductDtosToProducts(FakeStoreProductDto[] fakeStoreProductDtos) {
         List<Product> products = new ArrayList<>();
         for (FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos) {
