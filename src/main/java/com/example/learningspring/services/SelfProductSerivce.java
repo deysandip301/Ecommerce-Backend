@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-@Service
-@Primary
+@Service("selfProductService")
+//@Primary
 public class SelfProductSerivce implements ProductService {
-    private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
+    private ProductRepository productRepository;
+    private CategoryRepository categoryRepository;
 
     public SelfProductSerivce(ProductRepository productRepository , CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
@@ -41,18 +41,13 @@ public class SelfProductSerivce implements ProductService {
     public Product createProduct(Product product) {
         Category category = product.getCategory();
 
-        Category savedCategory = null;
-        if(category.getId() == null) {
-//            savedCategory = categoryRepository.save(category);
+        if (category.getId() == null) { // save the category
             product.setCategory(categoryRepository.save(category));
         }
+
         Product product1 = productRepository.save(product);
         Optional<Category> optionalCategory = categoryRepository.findById(category.getId());
-        if(optionalCategory.isEmpty()) {
-            throw new ProductNotFoundException(category.getId(), "Please pass a valid categoryId");
-        }
         product1.setCategory(optionalCategory.get());
         return product1;
-
     }
 }
